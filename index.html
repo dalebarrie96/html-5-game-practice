@@ -2,11 +2,13 @@
 <html>
 <head>
 <title>Dale Barrie HTML5 Game testing</title>
+
+<script src="javascript/jquery-3.2.1.min.js"></script>
+<script src="javascript/jquery.hotkeys.js"></script>
+<script src="javascript/key_status.js"></script>
 </head>
 <body>
 <h1>Dale Barrie HTML5 game testing</h1>
-
-<script src="javascript/jquery-3.2.1.min.js"></script>
 
 <script>
 /////////////////////////////////////////////////////////////////
@@ -31,18 +33,31 @@ update();
 draw();
 }, 1000/FPS);
 
-var textXPos = 50;
-var textYPos = 50;
+var player = {
+	color: "#00A",
+	x: 220,
+	y: 270,
+	width: 32,
+	height: 32,
+	draw: function(){
+		canvas.fillStyle = this.color;
+		canvas.fillRect(this.x, this.y, this.width, this.height);
+	}
+};
 
 function update(){
-textXPos +=1;
-textYPos +=1;
+	if(keydown.left){
+		player.x -= 2;
+	}
+	
+	if(keydown.right){
+		player.x += 2;
+	}
 }
 
 function draw(){
   canvas.clearRect(0,0, CANVAS_HEIGHT, CANVAS_WIDTH);
-  canvas.fillStyle = "#000"; // black i think 
-  canvas.fillText("hello hello world", textXPos, textYPos);
+  player.draw();
 }
 </script>
 </body>
