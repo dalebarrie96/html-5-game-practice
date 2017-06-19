@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<title>Dale Barrie HTML5 Game testing</title>
+</head>
+<body>
+<h1>Dale Barrie HTML5 game testing</h1>
+
+<script src="javascript/jquery-3.2.1.min.js"></script>
+
+<script>
+var CANVAS_WIDTH = 500;
+var CANVAS_HEIGHT = 500;
+
+var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas>");
+
+var canvas = canvasElement.get(0).getContext("2d");
+
+canvasElement.appendTo('body');
+
+</script>
+</body>
+</html>
