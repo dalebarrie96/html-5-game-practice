@@ -17,6 +17,8 @@
 var CANVAS_WIDTH = 480;
 var CANVAS_HEIGHT = 320;
 
+var score = 0;
+
 var canvasElement = $("<canvas width='" + CANVAS_WIDTH + "' height='" + CANVAS_HEIGHT + "'></canvas>");
 
 var canvas = canvasElement.get(0).getContext("2d");
@@ -72,6 +74,7 @@ I.x += I.xVelocity;
 I.y += I.yVelocity;
 
 I.active = I.active && I.inBounds();
+
 };
 
 return I;
@@ -114,12 +117,49 @@ I.update = function(){
 	I.age++;
 	
 	I.active = I.active && I.inBounds();
+	
+	I.explode = function() {
+	    score ++;
+    this.active = false;
+  };
 };
 
 return I;
 };
 
+player.explode = function(){
+this.active = false;
+}
+
+
+function collides(a, b) {
+  return a.x < b.x + b.width &&
+         a.x + a.width > b.x &&
+         a.y < b.y + b.height &&
+         a.y + a.height > b.y;
+}
+
+function handleCollisions(){
+	playerBullets.forEach(function(bullet){
+		enemies.forEach(function(enemy){
+			if(collides(bullet, enemy)){
+				enemy.active = false;
+				bullet.active = false;
+			}
+		});
+	});
+	
+	enemies.forEach(function(enemy){
+		if(collides(enemy, player)){
+			enemy.explode();
+			player.explode();
+		}
+	});
+}
+
 function update(){
+
+	handleCollisions();
 
 	if(keydown.space){
 		player.shoot();
@@ -188,6 +228,7 @@ function draw(){
 	enemy.draw();
   })
 }
+
 </script>
 </body>
 </html>
