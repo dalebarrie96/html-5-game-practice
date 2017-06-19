@@ -45,7 +45,45 @@ var player = {
 	}
 };
 
+var playerBullets = [];
+
+function bullet(I){
+
+I.active = true;
+
+I.xVelocity = 0;
+I.yVelocity = -I.speed;
+I.width = 3;
+I.height = 3;
+I.color = "#000";
+
+I.inBounds = function(){
+	return I.x >= 0 && I.x <= CANVAS_WIDTH &&
+	I.y >=0 && I.y <= CANVAS_HEIGHT;
+};
+
+I.draw = function(){
+	canvas.fillStyle = this.color;
+	canvas.fillRect(this.x, this.y, this.width, this.height)
+};
+
+I.update = function(){
+I.x += I.xVelocity;
+I.y += I.yVelocity;
+
+I.active = I.active && I.inBounds();
+};
+
+return I;
+}
+
+
 function update(){
+
+	if(keydown.space){
+		player.shoot();
+	}
+	
 	if(keydown.left){
 	if(player.x < 5){
 		player.x = 4;
@@ -59,11 +97,39 @@ function update(){
 	}
 		player.x += 5;
 	}
+	
+	playerBullets.forEach(function(bullet){
+		bullet.update();
+	})
+	
+	playerBullets = playerBullets.filter(function(bullet){
+		return bullet.active;
+	})
 }
+
+player.shoot = function(){
+	var bulletPosition = this.midpoint();
+	playerBullets.push(bullet({
+		speed:5,
+		x: bulletPosition.x,
+		y: bulletPosition.y
+	}));
+};
+
+player.midpoint = function(){
+return{
+x: this.x + this.width/2,
+y: this.y + this.height/2
+};
+};
 
 function draw(){
   canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   player.draw();
+  
+  playerBullets.forEach(function(bullet){
+	bullet.draw();
+  })
 }
 </script>
 </body>
