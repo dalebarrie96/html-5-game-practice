@@ -47,16 +47,22 @@ var player = {
 
 function update(){
 	if(keydown.left){
-		player.x -= 2;
+	if(player.x < 5){
+		player.x = 4;
+	}
+		player.x -= 5;
 	}
 	
 	if(keydown.right){
-		player.x += 2;
+	if(player.x > (CANVAS_WIDTH - player.width)){
+		player.x = (CANVAS_WIDTH - player.width)
+	}
+		player.x += 5;
 	}
 }
 
 function draw(){
-  canvas.clearRect(0,0, CANVAS_HEIGHT, CANVAS_WIDTH);
+  canvas.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   player.draw();
 }
 </script>
