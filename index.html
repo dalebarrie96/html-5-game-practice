@@ -31,13 +31,18 @@ update();
 draw();
 }, 1000/FPS);
 
-function update(){
+var textXPos = 50;
+var textYPos = 50;
 
+function update(){
+textXPos +=1;
+textYPos +=1;
 }
 
 function draw(){
+  canvas.clearRect(0,0, CANVAS_HEIGHT, CANVAS_WIDTH);
   canvas.fillStyle = "#000"; // black i think 
-  canvas.fillText("hello hello world", 50, 50);
+  canvas.fillText("hello hello world", textXPos, textYPos);
 }
 </script>
 </body>
